@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "nr1-service-instance-explorer-launcher",
+    "displayName": "Nr1ServiceInstanceExplorerLauncher",
+    "description": "Describe me",
+    "rootNerdletId": "nr1-service-instance-explorer-nerdlet"
+}
