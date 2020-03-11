@@ -141,7 +141,10 @@ console.debug("passing table config what?", _tableConfig);
               <br/>
                 <SIExplorerBody
                   launcherUrlState={this.props.launcherUrlState}
-                  {...this.state}
+                  account={this.state.account}
+                  app={this.state.app}
+                  tableConfig={this.state.tableConfig}
+                  compute={this.state.compute}
                 />
               
                 {/* Create Modal */}

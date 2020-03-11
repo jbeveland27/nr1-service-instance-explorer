@@ -402,11 +402,14 @@ async reload(_account, _app, _compute, _tableConfig, _launcherUrlState) {
 
     console.debug("this row picked", _row);
 
-    const nerdlet = {
+    const __confignerdlet = {
       id: 'container-details',
-    };
+      urlState: {
+        selected_row: _row
+      }
+    }
  
-    navigation.openStackedNerdlet(nerdlet);
+    navigation.openStackedNerdlet(__confignerdlet);
   } // pickRow
   
   
