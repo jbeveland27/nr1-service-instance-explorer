@@ -1,9 +1,28 @@
 import React from 'react';
+import { PlatformStateContext, NerdletStateContext, AutoSizer } from 'nr1';
+import ServiceInstanceExplorer from './components/service-instance-explorer';
 
-// https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
-
-export default class Nr1ServiceInstanceExplorerNerdletNerdlet extends React.Component {
-    render() {
-        return <h1>Hello, nr1-service-instance-explorer-nerdlet Nerdlet!</h1>;
-    }
+export default class Wrapper extends React.PureComponent {
+  render() {
+    return (
+      <PlatformStateContext.Consumer>
+        {launcherUrlState => (
+          <NerdletStateContext.Consumer>
+            {nerdletUrlState => (
+              <AutoSizer>
+                {({ width, height }) => (
+                  <ServiceInstanceExplorer
+                    launcherUrlState={launcherUrlState}
+                    nerdletUrlState={nerdletUrlState}
+                    width={width}
+                    height={height}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </NerdletStateContext.Consumer>
+        )}
+      </PlatformStateContext.Consumer>
+    );
+  }
 }

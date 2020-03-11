@@ -1,6 +1,6 @@
 {
     "schemaType": "NERDLET",
     "id": "nr1-service-instance-explorer-nerdlet",
-    "displayName": "Nr1ServiceInstanceExplorerNerdlet",
+    "displayName": "Service Instance Explorer",
     "description": ""
 }

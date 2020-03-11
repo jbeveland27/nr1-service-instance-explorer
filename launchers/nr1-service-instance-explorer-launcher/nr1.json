@@ -1,7 +1,7 @@
 {
     "schemaType": "LAUNCHER",
     "id": "nr1-service-instance-explorer-launcher",
-    "displayName": "Nr1ServiceInstanceExplorerLauncher",
-    "description": "Describe me",
+    "displayName": "Service Instance Explorer",
+    "description": "Provides views showing how your service instances are running, with the goal of isolating and discrepancies",
     "rootNerdletId": "nr1-service-instance-explorer-nerdlet"
 }

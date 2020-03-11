@@ -1,0 +1,127 @@
+@import '~@newrelic/nr1-community/dist/index.css';
+
+.header {
+  .options-bar {
+    height: 50px;
+    justify-content: space-between;
+    background-color: #EDEEEE;
+    border-top: 1px solid #E3E4E4;
+    border-bottom: 1px solid #E3E4E4;
+    box-sizing: border-box;
+    padding: 0 16px 0;
+
+    .account-picker {
+      font-size: 16px;
+    }
+
+    .app-picker {
+      font-size: 16px;
+    }
+
+    .title {
+      height: 100%;
+      display: inline-block;
+      line-height: 48px;
+      flex-grow: 1;
+      text-align: right;
+      font-size: 12px;
+      color: #8E9494;
+    }
+  }
+}
+  
+.header-right-side {
+  height: 100%;
+
+  [class*='wnd-Stack'] {
+    height: 100%;
+  }
+  
+  [class*='wnd-Button--medium'] {
+    position: relative;
+    top: 8px;
+  }
+}
+  
+div.header-right-side .remove-filters-stack-item {
+  border-left: 1px dotted #d5d7d7;
+  padding-left: 16px;
+  margin-left: 16px;
+}
+
+.plot-picker-stack-item {
+  border-left: 1px dotted #b9bdbd;
+  padding-left: 16px;
+
+  [class*="Radio-label"] {
+    font-size: 12px;
+  }
+
+  [class*="Radio-input"] {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.table-column-picker {
+  padding-left: 16px;
+
+  [class*="Checkbox-label"]{
+    font-size: 12px;
+  }
+
+  [class*="Checkbox-input"]{
+    width: 14px;
+    height: 14px;
+  }
+}
+  
+.container-explorer-container {
+  overflow: scroll;
+
+  .detail-pane-grid-minimized & {
+    padding-right: 18px;
+  }
+}
+  
+.container-explorer {
+  height: calc(100% - 50px);
+  background-color: rgb(248, 248, 248);
+}
+  
+.container-explorer-grid {
+  grid-gap: 0;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+  
+.full-height {
+  height: 100%;
+}
+  
+.plot-picker-container {
+  width: 100%;
+  display: flex;
+  align-items: bottom;
+  border-bottom: 1px solid #edeeee;
+
+  &:empty {
+    display: none;
+  }
+
+  .title {
+    padding-top: 1px;
+    font-size: 14px;
+  }
+  .limit-info {
+    color: #666666;
+    flex-grow: 1;
+    height: 100%;
+    text-align: right;
+    padding-right: 18px;
+    padding-top: 4px;
+    padding-left: 14px;
+    font-style: italic;
+  }
+}
