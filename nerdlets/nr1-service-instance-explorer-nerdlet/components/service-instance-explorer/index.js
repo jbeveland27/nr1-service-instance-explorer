@@ -76,7 +76,7 @@ console.debug("open the modal bay door hal");
   } // setCompute
 
   async setTableConfig(_tableConfig) {
-console.debug("passing table config what?", _tableConfig);
+
     if (_tableConfig !== null && _tableConfig !== undefined) {
         await this.setState({ tableConfig: _tableConfig});
     } // if

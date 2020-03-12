@@ -61,7 +61,16 @@ const TableColumns = [
       source: "Transaction",
       enabled: true, 
       applicability: "any"
-    },    
+    },   
+    {
+      filter: "filter(average(duration), WHERE appName IS NOT NULL) AS 'txnavg'",
+      title: "TXN Avg (S)",
+      reference: "txnavg",
+      formatter: (value) => value,
+      source: "Transaction",
+      enabled: true, 
+      applicability: "any"
+    },   
     {
       filter: "filter(percentile(duration, 50), WHERE appName IS NOT NULL) AS 'txn_50_percentile'",
       title: "50TH %LE (S)",

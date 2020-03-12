@@ -31,6 +31,11 @@ export default class SIExplorerBody extends React.Component {
     this.pickRow = this.pickRow.bind(this);
   }
 
+  /**
+   * 
+   * @param {*} _account 
+   * @param {*} _app 
+   */
   async _getPodWhereClause(_account, _app) {
 
     const __query = `{
@@ -66,6 +71,11 @@ export default class SIExplorerBody extends React.Component {
     return(__NRQL_SNIPPET);
   } // _getPodWhereClause
 
+  /**
+   * 
+   * @param {*} _uniqueRoots 
+   * @param {*} _host 
+   */
   _reconcileRoot(_uniqueRoots, _host) {
 
     const __truncatedHostname = this._truncateHostname(_host);
@@ -123,6 +133,14 @@ export default class SIExplorerBody extends React.Component {
 
   } // _truncateHostname
 
+  /**
+   * 
+   * @param {*} _account 
+   * @param {*} _app 
+   * @param {*} _compute 
+   * @param {*} _tableConfig 
+   * @param {*} _launcherUrlState 
+   */
 async _getTableData(_account, _app, _compute, _tableConfig, _launcherUrlState) {
 
   // get the NRQL for this table ...
@@ -185,7 +203,7 @@ async _getTableData(_account, _app, _compute, _tableConfig, _launcherUrlState) {
   } // else
 
   __NRQL = __NRQL + " " + __NRQL_TIMERANGE + " LIMIT MAX";
-
+console.debug("nrql", __NRQL);
   const __query = `{
     actor {
       account(id: ${_account.id}) {
@@ -197,7 +215,7 @@ async _getTableData(_account, _app, _compute, _tableConfig, _launcherUrlState) {
 }`;
 
 const __result = await NerdGraphQuery.query({ query: __query, fetchPolicyType: NerdGraphQuery.FETCH_POLICY_TYPE.NO_CACHE });
-
+console.debug("result", __result);
 if (_compute !== undefined && _compute !==null){
 
     if (_compute !== "containerId") {
@@ -237,7 +255,7 @@ var __processedTableData = [];
           });
 
           if (_compute !== "containerId") {
-            console.debug("need tp dp hostname thing ... ");
+            __objTMP["hostname"] = {text: this.formatMetric("hostname", _item.hostfullHostname[1]), value: _item.hostfullHostname[1]}
           } // if
           else {
             __objTMP["containerId"] = {text: this.formatMetric("containerId", _item["containerId"]), value: _item["containerId"]}
@@ -252,40 +270,46 @@ var __processedTableData = [];
 
 } // _getTableData
 
+/**
+ * 
+ * @param {*} _results 
+ */
 async reconcileHosts(_results) {
 
   var __reconciledResults = [];
 
+  /* loop and discover the host name compliment */
   _results.map(__result => {
-
-      if (__result.entityName !== null) {
-
+   
+      //if (__result.entityName !== null) {
+      if (__result.hostfullHostname[0] === null) {
           __reconciledResults.push(__result);
       } //if
-
   });
 
   var __foundHost;
 
+  /* loop and reconcile the app instance data */
   _results.map(__result => {
-
-      if (__result.apm_host !== null) {
-
-          __foundHost = __reconciledResults.find(__element => __element.entityName === __result.apm_host);
+      //if (__result.apm_host !== null) {
+      if (__result.hostfullHostname[1] === null) {
+//hostfullHostname
+          __foundHost = __reconciledResults.find(__element => __result.hostfullHostname[0] === __element.hostfullHostname[1] );
 
           if (__foundHost !== undefined) {
               __foundHost.percentile = __result.percentile;
               __foundHost.txnrt = __result.txnrt;
               __foundHost.errrt = __result.errrt;
+              __foundHost.txn = __result.txn;
           } //if
           else {
-              console.debug("no match found in infra data ", __result);
+              __result.hostfullHostname[1] = __result.hostfullHostname[0];
+              __reconciledResults.push(__result);
           } //else
 
       } //if
 
   });
-
   return(__reconciledResults);
 } //reconcileHosts
 
@@ -308,7 +332,7 @@ formatMetric(_name, _value) {
     } // else
 
   } //else if
-  else if (_name === "txn_90_percentile[90]" || _name === "txn_50_percentile[50]") {
+  else if (_name === "txn_90_percentile[90]" || _name === "txn_50_percentile[50]" || _name === "txnavg") {
 
     return(Math.round(_value * 10000) / 10000);
   } //else if
@@ -363,7 +387,7 @@ async reload(_account, _app, _compute, _tableConfig, _launcherUrlState) {
       __tableCols.push(
         {
           title: "Hostname",
-          name: "entityName"
+          name: "hostname"
         } // ????????? ^^^ 
       )
     } // if
@@ -405,7 +429,9 @@ async reload(_account, _app, _compute, _tableConfig, _launcherUrlState) {
     const __confignerdlet = {
       id: 'container-details',
       urlState: {
-        selected_row: _row
+        selected_row: _row,
+        selected_app: this.props.app,
+        selected_account: this.props.account
       }
     }
  

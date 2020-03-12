@@ -30,7 +30,8 @@ export default class ContainerDetailsNerdlet extends React.Component {
         super(props);
 
         this.state = {
-            selected_row: null
+            selected_row: null,
+            selected_app: null
         } //state
 
     } //constructor
@@ -40,8 +41,11 @@ export default class ContainerDetailsNerdlet extends React.Component {
 
         //get values passed to this nerdlet from the state context
         const __selected_row = this.context.selected_row;
-
+        const __selected_app = this.context.selected_app;
+        const __selected_account = this.context.selected_account;
         this.setState({selected_row: __selected_row});
+        this.setState({selected_app: __selected_app});
+        this.setState({selected_account: __selected_account});
         console.debug("selected row", __selected_row);
     } //componentDidMount
     
@@ -55,25 +59,24 @@ export default class ContainerDetailsNerdlet extends React.Component {
 
                     console.debug(platformUrlState);
 
-                    if (this.state.selected_row === null) {
+                    if (this.state.selected_row === null || this.state.selected_app === null || this.state.selected_account === null) {
 
                         return(<div>
                             <Spinner/>
                         </div>)
                     } // if
                     else { 
-
                         return(
                             <div>
-                          
                                 <DetailsDashboard
                                    launcherUrlState={platformUrlState}
                                    selected_row={this.state.selected_row} 
+                                   selected_app={this.state.selected_app}
+                                   selected_account={this.state.selected_account}
                                 />
                             </div>
                         )
                     } // else
-
                 }}
               </NerdletStateContext.Consumer>
             )}
