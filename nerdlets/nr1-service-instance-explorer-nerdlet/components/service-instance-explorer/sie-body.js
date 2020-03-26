@@ -203,7 +203,7 @@ async _getTableData(_account, _app, _compute, _tableConfig, _launcherUrlState) {
   } // else
 
   __NRQL = __NRQL + " " + __NRQL_TIMERANGE + " LIMIT MAX";
-console.debug("nrql", __NRQL);
+//console.debug("nrql", __NRQL);
   const __query = `{
     actor {
       account(id: ${_account.id}) {
@@ -215,7 +215,7 @@ console.debug("nrql", __NRQL);
 }`;
 
 const __result = await NerdGraphQuery.query({ query: __query, fetchPolicyType: NerdGraphQuery.FETCH_POLICY_TYPE.NO_CACHE });
-console.debug("result", __result);
+//console.debug("result", __result);
 if (_compute !== undefined && _compute !==null){
 
     if (_compute !== "containerId") {
@@ -340,6 +340,17 @@ formatMetric(_name, _value) {
 
     return(_value / 1048576).toFixed(2);
   } //else if
+  else if (_name === "entityName") {
+
+    console.debug("value  " + _value)
+    if (_value !== null) {
+
+      return(_value.substring(0, _value.indexOf(".")));
+    }
+    else { 
+      return("unknown");
+    } // else
+  } // else if
   else {
 
     return(_value);

@@ -1,5 +1,14 @@
 const TableColumns = [
     {
+      filter: "filter(latest(entityName), WHERE apmApplicationNames IS NOT NULL) AS 'entityName'",
+      title: "EntityName",
+      reference: "entityName",
+      formatter: (value) => value,
+      source: "ProcessSample",
+      enabled: true,
+      applicability: "containerId"
+    },
+    {
       filter: "filter(average(cpuPercent), WHERE apmApplicationNames IS NOT NULL) AS 'container_cpu'",
       title: "Container CPU (Avg)%",
       reference: "container_cpu",
